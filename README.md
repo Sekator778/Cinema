@@ -2,10 +2,19 @@
 # Cinema
 <p>
 простой веб сайт по покупкe билетов в кинотеатр.</p>
-<p>
-Начальная страница сайта index.html. 
 
+<div>
+<p>Начальная страница сайта index.html. 
 На ней мы показываем Зал c рядами.</p>
+<img src="https://github.com/Sekator778/Cinema/blob/master/src/main/resources/img/start.png" width="500px" height="300px">
+
+</div>
+<div>
+Booking page
+<img src="https://github.com/Sekator778/Cinema/blob/master/src/main/resources/img/booking.png" width="500px" height="300px">
+</div>
+
+
 
 <h4>The following technologies were used:</h4>
 
