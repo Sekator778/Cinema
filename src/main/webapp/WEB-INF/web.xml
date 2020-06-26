@@ -12,4 +12,12 @@
     <servlet-name>HallServlet</servlet-name>
     <url-pattern>/updateHall</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>PaymentServlet</servlet-name>
+    <servlet-class>servlets.PaymentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PaymentServlet</servlet-name>
+    <url-pattern>/payment</url-pattern>
+  </servlet-mapping>
 </web-app>
