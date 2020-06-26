@@ -9,6 +9,9 @@
 <img src="https://github.com/Sekator778/Cinema/blob/master/src/main/resources/img/start.png" width="500px" height="300px">
 
 </div>
+
+<h5>Booking page</h5>
+
 <div>
 Booking page
 <img src="https://github.com/Sekator778/Cinema/blob/master/src/main/resources/img/booking.png" width="500px" height="300px">
