@@ -7,19 +7,18 @@
 
 На ней мы показываем Зал c рядами.</p>
 
-<p>
 <h4>The following technologies were used:</h4>
 
-<ul>
-<li>
-1) Java EE Servlets
-2) JDBC
-3) Liquibase
-4) PostgreSQL
-5) JSP, JSTL
-6) SLF4J, LOG4J
-7) Ajax, JSON
-8) TagLibs
-9) JavaScript</li>
-</ul>
-</p>
+
+<ol>
+<li> Java EE Servlets </li>
+<li> JDBC </li>
+<li> PostgreSQL </li>
+<li> Liquibase </li>
+<li> JSP, JSTL </li>
+<li> JSLF4J, LOG4J </li>
+<li> Ajax, JSON </li>
+<li> TagLibs </li>
+<li> JavaScript </li>
+</ol>
+
