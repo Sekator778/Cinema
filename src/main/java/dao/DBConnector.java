@@ -99,6 +99,7 @@ public class DBConnector {
         ResultSet set = null;
         try {
             connection = SOURCE.getConnection();
+            LOGGER.info("=======DATABASE CONNECTION OPEN=======");
             connection.setAutoCommit(false);
             statement = connection.prepareStatement(queryFindAccount);
             statement.setString(1, userName);
@@ -130,6 +131,7 @@ public class DBConnector {
             if (connection != null) {
                 try {
                     connection.rollback();
+                    LOGGER.info("=======!Db Exception! Rolling Back Data=======");
                 } catch (SQLException exception) {
                     LOGGER.error(exception.getMessage(), exception);
                 }
@@ -145,6 +147,7 @@ public class DBConnector {
             } catch (Exception e) {
                 LOGGER.error(e.getMessage(), e);
             }
+            LOGGER.info("=======DATABASE CONNECTION CLOSED=======");
         }
         return result;
     }
