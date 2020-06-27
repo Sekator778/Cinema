@@ -23,10 +23,8 @@ public class HallServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int hallId = Integer.parseInt(req.getParameter("id"));
         Map<Integer, Boolean> schema = service.getHallSchema(hallId);
-
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
-
         PrintWriter writer = new PrintWriter(resp.getOutputStream());
         JSONObject object = new JSONObject();
         for (Map.Entry<Integer, Boolean> entry : schema.entrySet()

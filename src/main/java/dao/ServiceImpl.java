@@ -69,5 +69,4 @@ public class ServiceImpl implements Service {
         int placeNum = Integer.parseInt(place);
         return dbCon.doTransaction(name, userPhone, holeId, rowNum, placeNum);
     }
-
 }

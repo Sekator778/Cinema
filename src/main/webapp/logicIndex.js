@@ -25,8 +25,10 @@ function setValues($data) {
         }
     }
 }
+
 setTimeout(updateHall, 0);
-setInterval(updateHall, 1000);
+setInterval(updateHall, 3000);
+
 function pay() {
     var placeNumber = "";
     var radios = document.getElementsByName('place');

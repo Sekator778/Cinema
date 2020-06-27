@@ -2,6 +2,7 @@ package model;
 
 /**
  * place to cinema hall
+ * -1 place is free
  */
 
 public class HallPlace {
