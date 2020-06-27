@@ -81,6 +81,7 @@ public class DBConnector {
      * 1. find user
      * 2. if user not present - addUser
      * 3. booking current place
+     * 4. if check dta -1 method clear place
      * @param userName - customer name
      * @param userPhone - customer phone
      * @param hall - id hall cinema
@@ -94,6 +95,8 @@ public class DBConnector {
         String queryFindAccount = "select * from accounts where name = ? and phone = ?;";
         String queryAddAccount = "insert into accounts (name, phone) values (?, ?);";
         String queryBookPlace = "update halls set account_id = ? where hall_id = ? and row = ? and place = ?";
+        String queryClearPlace = "update halls set account_id = ? where account_id = ? and hall_id = ?";
+        String queryClearAccount = "delete from accounts where account_id = ?";
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet set = null;
@@ -118,11 +121,23 @@ public class DBConnector {
                     accountId = set.getInt(1);
                 }
             }
-            statement = connection.prepareStatement(queryBookPlace);
-            statement.setInt(1, accountId);
-            statement.setInt(2, hall);
-            statement.setInt(3, row);
-            statement.setInt(4, place);
+            if ((row == -1) && (place == -1)) {
+                statement = connection.prepareStatement(queryClearPlace);
+                statement.setInt(1, -1);
+                statement.setInt(2, accountId);
+                statement.setInt(3, hall);
+                statement.executeUpdate();
+                //clear account
+                statement = connection.prepareStatement(queryClearAccount);
+                statement.setInt(1, accountId);
+
+            } else {
+                statement = connection.prepareStatement(queryBookPlace);
+                statement.setInt(1, accountId);
+                statement.setInt(2, hall);
+                statement.setInt(3, row);
+                statement.setInt(4, place);
+            }
             statement.executeUpdate();
             connection.commit();
             result = true;

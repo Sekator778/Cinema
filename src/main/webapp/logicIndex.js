@@ -40,3 +40,7 @@ function pay() {
         window.location.href = "../cinema/payment.html?placeNumber=" + placeNumber;
     }
 }
+
+function cancel() {
+        window.location.href = "../cinema/cancel.html";
+}

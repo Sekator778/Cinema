@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Cancel</title>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+    function validate() {
+        var name = document.getElementById('username').value;
+        var phone = document.getElementById('phone').value;
+        var massage = "";
+        if (name === "") {
+            massage += "name";
+        }
+        if (phone === "") {
+            if (massage !== "") {
+                massage += " and ";
+            }
+            massage += "phone";
+        }
+        if (massage !== "") {
+            alert("Please enter: " + massage);
+        } else {
+            var details = {
+                name: name,
+                phone: phone,
+                hall: "1", // another cinema hall
+            };
+            clearDB(details);
+        }
+        return false;
+    }
+
+    function clearDB(user) {
+        var url = "http://localhost:8081/cinema/cancel";
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: JSON.stringify(user),
+            success: [function ($data) {
+                resultProcessing($data);
+            }],
+            dataType: 'json'
+        });
+    }
+
+    function resultProcessing($data) {
+        if ($data['result'] === true) {
+            alert("Booking was canceled successfully.");
+        } else {
+            alert("Please try again latter. . . .");
+        }
+        document.location.href = "index.html";
+    }
+</script>
+<div class="container">
+    <div class="row pt-3">
+        <h3 id="head">
+
+        </h3>
+    </div>
+    <div class="row">
+        <form>
+            <div class="form-group">
+                <label for="username">Name</label>
+                <input type="text" class="form-control" id="username" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone number</label>
+                <input type="number" class="form-control" id="phone" placeholder="Phone number">
+            </div>
+            <button type="button" class="btn btn-success" onclick="return validate()">Cancel booking</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
