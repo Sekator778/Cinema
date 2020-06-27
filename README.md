@@ -5,25 +5,20 @@
 В Persistence используется jdbc. 
 Важно. что записи делаем атомарно. То есть в одной транзакции
 
-
 <div>
 <p>Начальная страница сайта index.html. 
 На ней мы показываем Зал c рядами.</p>
 <img src="https://github.com/Sekator778/Cinema/blob/master/src/main/resources/img/start.png" width="500px" height="300px">
-
 </div>
-
 <h5>Booking page</h5>
-
 <div>
-
 <img src="https://github.com/Sekator778/Cinema/blob/master/src/main/resources/img/booking.png" width="500px" height="300px">
 </div>
-
-
-
+<h5>Cancel booking page</h5>
+<div>
+<img src="https://github.com/Sekator778/Cinema/blob/master/src/main/resources/img/cancel.png">
+</div>
 <h4>The following technologies were used:</h4>
-
 
 <ol>
 <li> Java EE Servlets </li>
