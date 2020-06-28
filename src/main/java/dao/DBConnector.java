@@ -5,8 +5,10 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.InputStream;
 import java.sql.*;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
 /**
@@ -18,10 +20,8 @@ public class DBConnector {
      * logger
      */
     private final static Logger LOGGER = LoggerFactory.getLogger(DBConnector.class);
-    /**
-     * pool connection
-     */
-    private static final BasicDataSource SOURCE = new BasicDataSource();
+
+    private Connection connection;
     /**
      * instance class
      */
@@ -31,13 +31,7 @@ public class DBConnector {
      * constructor connection to psql DB cinema
      */
     private DBConnector() {
-        SOURCE.setUrl("jdbc:postgresql://localhost:5432/postgres");
-        SOURCE.setUsername("postgres");
-        SOURCE.setPassword("password");
-        SOURCE.setMinIdle(5);
-        SOURCE.setMaxIdle(10);
-        SOURCE.setMaxOpenPreparedStatements(100);
-        SOURCE.setDriverClassName("org.postgresql.Driver");
+        init();
     }
 
     /**
@@ -49,6 +43,21 @@ public class DBConnector {
         return INSTANCE;
     }
 
+    private void init() {
+        try (InputStream in = DBConnector.class.getClassLoader().getResourceAsStream("app.properties")) {
+            Properties config = new Properties();
+            config.load(in);
+            Class.forName(config.getProperty("driver-class-name"));
+            connection = DriverManager.getConnection(
+                    config.getProperty("url"),
+                    config.getProperty("username"),
+                    config.getProperty("password")
+            );
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
     /**
      * method read data from table hall
      *
@@ -58,7 +67,7 @@ public class DBConnector {
     public Set<HallPlace> getHallSchema(int hallId) {
         Set<HallPlace> hall = new HashSet<>();
         String query = "select * from halls where hall_id = ?;";
-        try (Connection connection = SOURCE.getConnection();
+        try (
              PreparedStatement statement = connection.prepareStatement(query)
         ) {
             statement.setInt(1, hallId);
@@ -97,11 +106,9 @@ public class DBConnector {
         String queryBookPlace = "update halls set account_id = ? where hall_id = ? and row = ? and place = ?";
         String queryClearPlace = "update halls set account_id = ? where account_id = ? and hall_id = ?";
         String queryClearAccount = "delete from accounts where account_id = ?";
-        Connection connection = null;
         PreparedStatement statement = null;
         ResultSet set = null;
         try {
-            connection = SOURCE.getConnection();
             LOGGER.info("=======DATABASE CONNECTION OPEN=======");
             connection.setAutoCommit(false);
             statement = connection.prepareStatement(queryFindAccount);
