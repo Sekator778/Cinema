@@ -1,3 +1,5 @@
+DROP table if exists accounts;
+DROP table if exists halls;
 CREATE TABLE accounts
 (
     account_id serial primary key,
