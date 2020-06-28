@@ -16,7 +16,9 @@ public class DBConnector {
      * logger
      */
     private final static Logger LOGGER = LoggerFactory.getLogger(DBConnector.class);
-
+    /**
+     * connection to DB from app.properties files
+     */
     private Connection connection;
     /**
      * instance class
