@@ -1,14 +1,11 @@
 package dao;
 
-import model.HallPlace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.sql.*;
-import java.util.HashSet;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 /**
  * connector to DB
@@ -63,11 +60,11 @@ public class DBConnector {
      * @param hallId - hallId
      * @return set with places
      */
-    public Set<HallPlace> getHallSchema(int hallId) {
-        Set<HallPlace> hall = new HashSet<>();
+    public Map<Integer, Boolean> getHallSchema(int hallId) {
+        Map<Integer, Boolean> occupiedPlace = new HashMap<>();
         String query = "select * from halls where hall_id = ?;";
         try (
-             PreparedStatement statement = connection.prepareStatement(query)
+                PreparedStatement statement = connection.prepareStatement(query)
         ) {
             statement.setInt(1, hallId);
             ResultSet set = statement.executeQuery();
@@ -75,13 +72,17 @@ public class DBConnector {
                 int row = set.getInt("row");
                 int place = set.getInt("place");
                 int account = set.getInt("account_id");
-                hall.add(new HallPlace(row, place, account));
+                int sitNumber = row * 10 + place;
+                if (account > 0) {
+                    occupiedPlace.put(sitNumber, true);
+                } else {
+                    occupiedPlace.put(sitNumber, false);
+                }
             }
-
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
         }
-        return hall;
+        return occupiedPlace;
     }
 
     /**
@@ -90,11 +91,12 @@ public class DBConnector {
      * 2. if user not present - addUser
      * 3. booking current place
      * 4. if check dta -1 method clear place
-     * @param userName - customer name
+     *
+     * @param userName  - customer name
      * @param userPhone - customer phone
-     * @param hall - id hall cinema
-     * @param row - row number
-     * @param place - place number
+     * @param hall      - id hall cinema
+     * @param row       - row number
+     * @param place     - place number
      * @return true if booking place
      */
     public boolean doTransaction(String userName, int userPhone, int hall, int row, int place) {
@@ -106,7 +108,7 @@ public class DBConnector {
         String queryClearPlace = "update halls set account_id = ? where account_id = ? and hall_id = ?";
         String queryClearAccount = "delete from accounts where account_id = ?";
         PreparedStatement statement = null;
-        ResultSet set = null;
+        ResultSet set;
         try {
             LOGGER.info("=======DATABASE CONNECTION OPEN=======");
             connection.setAutoCommit(false);

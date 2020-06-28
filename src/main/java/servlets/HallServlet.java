@@ -1,7 +1,6 @@
 package servlets;
 
-import dao.Service;
-import dao.ServiceImpl;
+import dao.DBConnector;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -17,7 +16,7 @@ import java.util.Map;
  */
 
 public class HallServlet extends HttpServlet {
-    private final Service service = ServiceImpl.getINSTANCE();
+    private final DBConnector service = DBConnector.getINSTANCE();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

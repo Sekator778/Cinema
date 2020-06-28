@@ -14,18 +14,10 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>PaymentServlet</servlet-name>
-    <servlet-class>servlets.PaymentServlet</servlet-class>
+    <servlet-class>servlets.BookingServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>PaymentServlet</servlet-name>
     <url-pattern>/payment</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>CancelServlet</servlet-name>
-    <servlet-class>servlets.CancelServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>CancelServlet</servlet-name>
-    <url-pattern>/cancel</url-pattern>
   </servlet-mapping>
 </web-app>
