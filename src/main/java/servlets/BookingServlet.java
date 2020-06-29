@@ -31,7 +31,7 @@ public class BookingServlet extends HttpServlet {
         HashMap map = mapper.readValue(json, HashMap.class);
         String name = (String) map.get("name");
         int phone = Integer.parseInt((String) map.get("phone"));
-        int hall = Integer.parseInt((String)map.get("hall"));
+        int hall = Integer.parseInt((String) map.get("hall"));
         if (!map.containsKey("row")) {
             row = -1;
         } else {
