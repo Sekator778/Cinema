@@ -1,5 +1,5 @@
-DROP table if exists accounts;
-DROP table if exists halls;
+DROP table if exists accounts cascade ;
+DROP table if exists halls cascade ;
 CREATE TABLE accounts
 (
     account_id serial primary key,
